@@ -1,0 +1,26 @@
+Pour la function malloc:
+
+- Structure s_pageinfo: si une page existe ou est cree on va y mettre l'information ici
+
+A partir de la 2 cas sont possible:
+
+EXAMPLE: on nous demande une zone memoire dans la partie tiny => o va donc voir tiny dans t_pageinfo
+
+1 cas => tiny dans t_pageinfo est null, on doit donc cree une page a l aide mmap (suivant cette formule TINY * 100).
+
+2 cas => tiny existe, on va donc aller voir a l'adresse, on ce retrouve donc au tout debut d'une page
+
+- suivant la size demande on ira dans l une des deux zones, voir meme cree une zone pour lui seul si c'est une grande taille.
+
+On a donc besoin : une liste chainee dans chaque projection a son debut qui va nous permettre de save : 1) tout les mallocs demande dans la plage
+																										2) leurs longueurs (size en octects, qui est le parametre recu)
+
+Pour la function free:
+
+- Aller dans la liste chainee et chercher quelle adresse est demande de free puis retirer le maillon.
+
+- Faire un algo pour remonter la memoire si il y a des trous dedans.
+
+Pour la function d'affichage des zones memoires:
+
+- Lire les listes chainees, puis realiser un affichage avec les infos. (adresse de debut de la zone, taille en octets)
