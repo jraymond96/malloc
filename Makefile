@@ -21,6 +21,7 @@ CC = gcc
 FLAGS = -Wall -Wextra -Werror
 
 SRCS = ft_malloc.c \
+       show_alloc_mem.c \
 			ft_memset.c \
 			ft_bzero.c \
 			ft_memcpy.c \

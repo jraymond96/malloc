@@ -145,5 +145,6 @@ void					ft_mem2join(char *dest, char *s1, char *s2,
 											size_t size);
 
 void					*ft_malloc(size_t size);
+void					show_alloc_mem();
 
 #endif

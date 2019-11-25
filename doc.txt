@@ -24,3 +24,9 @@ Pour la function free:
 Pour la function d'affichage des zones memoires:
 
 - Lire les listes chainees, puis realiser un affichage avec les infos. (adresse de debut de la zone, taille en octets)
+
+
+
+FUNCTION DE LA LIB UTULISE POUR LE MALLOC :
+
+FT_PUTSTR(); FT_MEMCPY(); FT_BZERO()

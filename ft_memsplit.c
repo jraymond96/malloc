@@ -64,9 +64,7 @@ char	**ft_memsplit(char *str, size_t size)
 {
 	int		words;
 	char	**new;
-	int		i;
 
-	i = size;
 	words = nb_of_words(str, --size);
 	if (!(new = (char**)ft_malloc(sizeof(char *) * (words + 1))))
 		return (NULL);

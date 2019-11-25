@@ -1,5 +1,6 @@
-#include  <stdlib.h>
-#include  <stdio.h>
+#include	<stdlib.h>
+#include	<stdio.h>
+#include	<unistd.h>
 
 typedef struct s_data_chunk	t_data_chunk;
 
@@ -12,7 +13,11 @@ struct						s_data_chunk
 
 int main()
 {
-	t_data_chunk	toto;
-	printf("%lu\n",  sizeof(toto));
+	char	*toto;
+
+	toto = (char *)malloc(1000);
+	printf("%p\n",  toto);
+	toto = toto + 100;
+	printf("%p\n",  toto);
 	return (0);
 }

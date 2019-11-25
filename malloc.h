@@ -10,8 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef MALLOC_H
+# define MALLOC_H
+
 # define TINY 1024
-# define SMALL 10240
+# define SMALL 10002
+
+# define TINY_ZONE	0
+# define SMALL_ZONE	1
+# define LARGE_ZONE	2
 
 # define TINYSPLIT 20
 # define SIZEMETADATA 16
@@ -24,7 +31,7 @@ struct						s_data_chunk
 {
 	int						free;
 	int						size;
-	t_data_chunk			*next;
+	void						*next;
 };
 
 typedef struct s_blocks_start	t_blocks_start;
@@ -41,3 +48,7 @@ struct						s_blocks_start
 */
 
 t_blocks_start *g_meta_datas;
+
+t_data_chunk	*g_metas_datas[3];
+
+#endif
