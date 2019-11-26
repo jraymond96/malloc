@@ -1,31 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   last_elem.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/20 17:06:14 by jraymond          #+#    #+#             */
-/*   Updated: 2019/11/26 15:55:17 by jraymond         ###   ########.fr       */
+/*   Created: 2019/11/26 18:37:17 by jraymond          #+#    #+#             */
+/*   Updated: 2019/11/26 19:09:10 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "libft.h"
-# include "malloc.h"
-# include <stdio.h>
-# include <unistd.h>
-
-int	main()
+t_data_chunk	*last_elem(t_data_chunk *begin)
 {
-	int	i;
-
-	i = 0;
-	while (i < 110)
-	{
-		ft_malloc(1024);
-		i++;
-	}
-
-	show_alloc_mem();
-	return (0);
+	if (!begin)
+		return (NULL);
+	while (begin->next)
+		begin = begin->next;
+	return (begin);
 }

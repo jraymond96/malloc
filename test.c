@@ -2,22 +2,24 @@
 #include	<stdio.h>
 #include	<unistd.h>
 
-typedef struct s_data_chunk	t_data_chunk;
-
-struct						s_data_chunk
-{
-	int						free;
-	int						size_zone;
-	t_data_chunk			*next;
-};
-
 int main()
 {
-	char	*toto;
+	int	i;
+	int	y;
 
-	toto = (char *)malloc(1000);
-	printf("%p\n",  toto);
-	toto = toto + 100;
-	printf("%p\n",  toto);
+	i = 3;
+	y = 0;
+
+	y = y | (1 << 1);
+
+	printf("y : %d\n", y);
+	if (i & (1 << 0))
+		printf("1 exist\n");
+	else
+		printf("1 didn't exist\n");
+	if (i & (1 << 1))
+		printf("2 exist\n");
+	else
+		printf("2 didn't exist\n");
 	return (0);
 }
