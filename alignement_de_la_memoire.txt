@@ -1,0 +1,2 @@
+si on est sur un 64 bits on a donc un bus de transport vers les memoire de 8 octects il faut donc a chaque fois avoir des choses d un multiple de 8 pour optimiser au mieux sinon c le process qui va mettre des nop (place a vide pour combler un non respect de cet ellignement)
+question de rapidite car il lit 8 octets par 8 octects du coup

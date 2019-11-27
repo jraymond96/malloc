@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 17:06:14 by jraymond          #+#    #+#             */
-/*   Updated: 2019/11/26 15:55:17 by jraymond         ###   ########.fr       */
+/*   Updated: 2019/11/27 21:13:03 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 int	main()
 {
-	int	i;
+/*	int	i;
 
 	i = 0;
 	while (i < 110)
@@ -25,7 +25,8 @@ int	main()
 		ft_malloc(1024);
 		i++;
 	}
-
+*/
+	ft_malloc(147456);
 	show_alloc_mem();
 	return (0);
 }

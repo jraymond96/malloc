@@ -6,7 +6,7 @@
 #    By: jraymond <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/19 15:26:12 by jraymond          #+#    #+#              #
-#    Updated: 2019/11/26 18:39:32 by jraymond         ###   ########.fr        #
+#    Updated: 2019/11/27 20:40:18 by jraymond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,8 @@ FLAGS = -Wall -Wextra -Werror
 SRCS = ft_malloc.c \
        show_alloc_mem.c \
 	   last_elem.c \
+	   handle_large_block.c \
+	   request_block.c \
 			ft_memset.c \
 			ft_bzero.c \
 			ft_memcpy.c \

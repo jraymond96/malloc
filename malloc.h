@@ -6,60 +6,80 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 14:07:30 by jraymond          #+#    #+#             */
-/*   Updated: 2019/11/26 19:09:08 by jraymond         ###   ########.fr       */
+/*   Updated: 2019/11/27 20:54:59 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MALLOC_H
 # define MALLOC_H
 
-# define TINY 1024
-# define SMALL 10002
+# include <string.h>
+
+# define TINY 992
+# define SMALL 126976
+
+# define TINY_MULTIPLE 16
+# define SMALL_MULTIPLE 512
 
 # define TINY_BLOCK 0
 # define SMALL_BLOCK 1
 # define LARGE_BLOCK 2
 
-# define SIZEMETADATA 16
-/*
-** TODO: autorized define = sizeof() ??
-*/
+# define SIZEHEADERBLOCK 16
+# define SIZEHEADERCHUNK 24
 
 /*
-** -------------------- MASK BITWISE FOR FLAGS IN STRUCT T_DATA_CHUNK --------------------
+**|-------------------------------------------------|
+**|						MASK						|
+**|-------------------------------------------------|
 */
 
-# define FREE_CHUNK (1 << 0)
-# define F_META_BLOCK (1 << 1)
+# define NEG_BYTE (1 << 31)
 
 /*
-** int flags in struct t_data_chumk :	first bit : if chunk is free or not
-										second bit : if chunk is first of block
+**|-------------------------------------------------|
+**|						STRCTURES					|
+**|-------------------------------------------------|
 */
 
-typedef struct s_data_chunk	t_data_chunk;
+typedef struct s_header_chunk	t_chunk;
 
-struct						s_data_chunk
-{
-	int						flags;
-	int						size;
+struct							s_header_chunk
+{	
+	int							flags;
+	int							size;
+	void						*prev;
 	void						*next;
 };
 
-t_data_chunk	*g_metas_datas[3];
 
-t_data_chunk	*last_elem(t_data_chunk *begin);
+typedef struct s_header_block	t_block;
 
-/*
-typedef struct s_blocks_start	t_blocks_start;
-
-struct						s_blocks_start
+struct							s_header_block
 {
-	t_data_chunk					*tiny;
-	t_data_chunk					*small;
-	t_data_chunk					*large;
+	void						*prev;
+	void						*next;
+	size_t						size_free;
 };
 
-t_blocks_start *g_meta_datas;
+/*
+**|-------------------------------------------------|
+**|						GLOBAL						|
+**|-------------------------------------------------|
 */
+
+t_block							*g_start_header_block[3];
+
+/*
+**|-------------------------------------------------|
+**|						FUNCTIONS					|
+**|-------------------------------------------------|
+*/
+
+t_block							*last_header_block(t_block *begin);
+t_chunk							*last_header_chunk(t_chunk *begin);
+
+void							*request_large_block(size_t size);
+void							*get_large_block(size_t size);
+
 #endif

@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_malloc.c                                        :+:      :+:    :+:   */
+/*   handle_large_chunk.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/27 17:36:54 by jraymond          #+#    #+#             */
-/*   Updated: 2019/11/27 20:55:46 by jraymond         ###   ########.fr       */
+/*   Created: 2019/11/27 17:56:25 by jraymond          #+#    #+#             */
+/*   Updated: 2019/11/27 21:06:30 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-void	*ft_malloc(size_t size)
+void	*get_large_block(size_t size)
 {
-	void	*free_chunk;
+	t_block			*last;
 
-	free_chunk = NULL;
-	if (size > SMALL)
-		free_chunk = get_large_block(size);
-	return (free_chunk);
+	if (!(last = last_header_block(g_start_header_block[LARGE_BLOCK])))
+	{
+		g_start_header_block[LARGE_BLOCK] = request_large_block(size);
+		return (g_start_header_block[LARGE_BLOCK]);
+	}
+	last->next = request_large_block(size);
+	return (last->next);
 }

@@ -1,25 +1,55 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   show_alloc_mem.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/27 18:54:56 by jraymond          #+#    #+#             */
+/*   Updated: 2019/11/27 21:13:07 by jraymond         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "malloc.h"
 #include "libft.h"
 #include <stdio.h>
 
-void	print_info(t_data_chunk *elem)
+void	print_tiny_small_info(t_block *header_b)
 {
 	void			*end_malloc;
-	t_data_chunk	*tmp;
+	t_chunk			*chunk;
 
-	tmp = elem;
-	if (!elem)
+	if (!header_b || !(chunk = (t_chunk *)(header_b + 1)))
 		ft_putstr("Nothing\n");
 	else
 	{
-		while (elem)
+		while (chunk)
 		{
-			if (! (elem->flags & FREE_CHUNK))
+			if (!(chunk->size & NEG_BYTE))
 			{
-				end_malloc = elem->next != NULL ? elem->next : (void *)((char *)elem + elem->size + SIZEMETADATA);
-				printf("%p - %p : %d octects\n", (void *)((char *)elem + SIZEMETADATA), end_malloc, elem->size);
+				end_malloc = chunk->next != NULL ? chunk->next : (void *)((char *)chunk + chunk->size + SIZEHEADERCHUNK);
+				printf("%p - %p : %d octects\n", (void *)((char *)chunk + SIZEHEADERCHUNK), end_malloc, chunk->size);
 			}
-			elem = elem->next;
+			chunk = chunk->next;
+		}
+	}
+}
+
+
+void	print_large_info()
+{
+	t_block			*block;
+	void			*end_malloc;
+
+	if (!(block = g_start_header_block[LARGE_BLOCK]))
+		ft_putstr("Nothing\n");
+	else
+	{
+		while (block)
+		{
+			end_malloc = block->next != NULL ? block->next : (void *)((char *)block + block->size_free + SIZEHEADERBLOCK);
+			printf("%p - %p : %zu octects\n", (void *)((char *)block + SIZEHEADERBLOCK), end_malloc, block->size_free);
+			block = block->next;
 		}
 	}
 }
@@ -27,9 +57,9 @@ void	print_info(t_data_chunk *elem)
 void	show_alloc_mem()
 {
 	ft_putstr("TINY :\n");
-	print_info(g_metas_datas[TINY_BLOCK]);
+	print_tiny_small_info(g_start_header_block[TINY_BLOCK]);
 	ft_putstr("SMALL :\n");
-	print_info(g_metas_datas[SMALL_BLOCK]);
+	print_tiny_small_info(g_start_header_block[SMALL_BLOCK]);
 	ft_putstr("LARGE :\n");
-	print_info(g_metas_datas[LARGE_BLOCK]);
+	print_large_info();
 }
