@@ -1,7 +1,7 @@
 #include	<stdlib.h>
 #include	<stdio.h>
 #include	<unistd.h>
-
+#include	"malloc.h"
 # define MASK (1 << i)
 /*size_t	my_malloc_good_size(size_t size)
 {
@@ -37,24 +37,11 @@ int main(int argc, char **argv)
 	int	i;
 	int	t;
 
-	t = 10000000;
-	i = 1;
-	while (t)
-	{
-		i *= -1;
-		i *= -1;
-/*		i |= (1 << 31);
-		i ^= (1 << 31);*/
-		t--;
-	}
-	/*
-	if (i & (1 << 31))
-		printf("OK\n");
-	else
-		printf("KO\n");*/
-	return (0);
 	printf("bad: %zu\n", sizeof(t_bad));
 	printf("good: %zu\n", sizeof(t_good));
+	printf("size_t: %zu\n", sizeof(size_t));
+	printf("t_block: %zu\n", sizeof(t_block));
+	printf("t_chunk: %zu\n", sizeof(t_chunk));
 	return (0);
 	if (argc != 2)
 	{

@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 18:54:56 by jraymond          #+#    #+#             */
-/*   Updated: 2019/11/27 21:13:07 by jraymond         ###   ########.fr       */
+/*   Updated: 2019/11/28 09:22:44 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 void	print_tiny_small_info(t_block *header_b)
 {
-	void			*end_malloc;
 	t_chunk			*chunk;
+	void			*end_malloc;
 
 	if (!header_b || !(chunk = (t_chunk *)(header_b + 1)))
 		ft_putstr("Nothing\n");
