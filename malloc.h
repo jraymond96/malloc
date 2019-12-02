@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 14:07:30 by jraymond          #+#    #+#             */
-/*   Updated: 2019/11/28 16:20:47 by jraymond         ###   ########.fr       */
+/*   Updated: 2019/12/02 19:28:16 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ t_block							*last_header_block(t_block *begin);
 t_chunk							*last_header_chunk(t_chunk *begin);
 
 void							*request_large_block(size_t size);
+void							*request_tiny_small_block(int type_block);
 void							*get_large_block(size_t size);
+void							*handle_tiny_small_block(size_t size);
 
 #endif

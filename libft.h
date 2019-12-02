@@ -6,7 +6,7 @@
 /*   By: jraymond <jraymond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/10 18:29:51 by jraymond          #+#    #+#             */
-/*   Updated: 2019/11/20 19:09:24 by jraymond         ###   ########.fr       */
+/*   Updated: 2019/12/02 19:28:37 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ void					ft_mem2join(char *dest, char *s1, char *s2,
 											size_t size);
 
 void					*ft_malloc(size_t size);
+void					ft_free(void *ptr);
 void					show_alloc_mem();
 
 #endif

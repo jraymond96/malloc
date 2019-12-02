@@ -23,3 +23,13 @@ A chaque malloc update header_block->size_free (header_block->size_free - size d
 FUNCTION DE LA LIB UTULISE POUR LE MALLOC :
 
 FT_PUTSTR(); FT_MEMCPY(); FT_BZERO()
+
+
+
+
+
+Flags a utilise
+
+-Weverything (pour tout avoir)
+
+-Wpadded (if struct got padding for alignement)

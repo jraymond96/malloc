@@ -6,7 +6,7 @@
 #    By: jraymond <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/19 15:26:12 by jraymond          #+#    #+#              #
-#    Updated: 2019/11/28 10:03:13 by jraymond         ###   ########.fr        #
+#    Updated: 2019/12/02 19:27:46 by jraymond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,12 +18,14 @@ NAME = libft_malloc_$(HOSTTYPE).so
 
 CC = gcc
 
-FLAGS = -Weverything
+FLAGS = -Wall -Wextra -Werror
 
 SRCS = ft_malloc.c \
        show_alloc_mem.c \
 	   last_elem.c \
 	   handle_large_block.c \
+	   handle_tiny_small_block.c \
+	   ft_free.c \
 	   request_block.c \
 			ft_memset.c \
 			ft_bzero.c \

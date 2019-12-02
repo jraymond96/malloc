@@ -6,28 +6,57 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 09:47:28 by jraymond          #+#    #+#             */
-/*   Updated: 2019/11/28 16:20:50 by jraymond         ###   ########.fr       */
+/*   Updated: 2019/12/02 16:36:18 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
+#include "libft.h"
 
-t_chunk			*split_chunk(t_chunk *chunk, size_t size)
+void			*add_new_chunk(t_chunk *chunk, int size)
 {
 	t_chunk		new;
+	void		*addr_new;
+
+	new.size = chunk->size - (size + SIZEHEADERCHUNK);
+	new.free |= FREE;
+	new.next = chunk->next;
+	new.prev = chunk;
+
+	addr_new = ((char *)chunk + size);
+	ft_memcpy(addr_new, &new, SIZEHEADERCHUNK);
+	if (chunk->next)
+		((t_chunk *)chunk->next)->prev = addr_new;
+	chunk->size = size;
+	chunk->next = addr_new;
+
+	return (addr_new);
+}
+
+t_chunk			*split_chunk(t_chunk *chunk, t_block *block, int size)
+{
 	int			min_size;
 
 	min_size = (size <= TINY) ? SMALLEST_T : SMALLEST_S;
-	if (size == (size_t)chunk->size)
+	if (size == chunk->size)
 		return (chunk);
-	new.size
+	if (chunk->size >= (size + SIZEHEADERCHUNK + min_size))
+	{
+		block->free_size -= (size + SIZEHEADERCHUNK);
+		chunk->free ^= FREE;
+		return (add_new_chunk(chunk, size));
+	}
+	else
+		return (chunk);
 }
 
-t_block			*get_block_with_free_space(t_block *block, size_t size)
+t_block			*get_block_with_free_space(int type_block, size_t size)
 {
 	t_block		*new_block;
+	t_block		*block;
 
 	new_block = NULL;
+	block = g_start_header_block[type_block];
 	while (block->next)
 	{
 		if (block->free_size >= size)
@@ -35,7 +64,7 @@ t_block			*get_block_with_free_space(t_block *block, size_t size)
 		block = block->next;
 	}
 	if (block->free_size >= size)
-		return (block)
+		return (block);
 	else
 	{
 		if (!(new_block = request_tiny_small_block(type_block)))
@@ -50,19 +79,20 @@ void			*find_free_chunk(int type_block, size_t size)
 	t_block		*block_with_free_space;
 	t_chunk		*chunk;
 	t_chunk		*free_chunk;
-	int			chunk_size;
+	int			cast_size;
 
-	if (!(block_with_free_space = get_block_with_free_space(type_block, size)))
-		return (NULL);
+	cast_size = (int)size;
 	while (1)
 	{
+		if (!(block_with_free_space = get_block_with_free_space(type_block, size)))
+			return (NULL);
 		chunk = (t_chunk *)((char *)block_with_free_space + SIZEHEADERBLOCK);
 		while (chunk)
 		{
-			if (chunk->free & FREE && (chunk->size + ))
+			if (chunk->free & FREE && chunk->size >= cast_size)
 			{
-				free_chunk = split_chunk(chunk);
-				return (((char *)free_chunk + SIZEHEADERCHUNK))
+				free_chunk = split_chunk(chunk, block_with_free_space, cast_size);
+				return (((char *)free_chunk + SIZEHEADERCHUNK));
 			}
 			chunk = chunk->next;
 		}
@@ -71,19 +101,13 @@ void			*find_free_chunk(int type_block, size_t size)
 
 void			*handle_tiny_small_block(size_t size)
 {
-	void		*free_chunk;
+	int			type_block;
 
-	if (size <= TINY_BLOCK)
+	type_block = (size <= TINY_BLOCK) ? TINY_BLOCK : SMALL_BLOCK;
+	if (!(g_start_header_block[type_block]))
 	{
-		if (!(g_start_header_block[TINY_BLOCK]))
-		{
-			if (!(g_start_header_block[TINY_BLOCK] = request_tiny_small_block(TINY_BLOCK)))
-				return (NULL);
-		}
-		free_chunk = find_free_chunk(TINY_BLOCK, size);
+		if (!(g_start_header_block[type_block] = request_tiny_small_block(type_block)))
+			return (NULL);
 	}
-	else
-	{
-
-	}
+	return (find_free_chunk(type_block, size));
 }

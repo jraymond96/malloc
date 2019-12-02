@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 18:03:12 by jraymond          #+#    #+#             */
-/*   Updated: 2019/11/28 16:20:53 by jraymond         ###   ########.fr       */
+/*   Updated: 2019/12/02 19:41:21 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void				creat_headers(void *start_block, int type_block)
 	t_block			header_block;
 	t_chunk			header_chunk;
 
-	if (type_block == TINY_ZONE)
+	if (type_block == TINY_BLOCK)
 		header_block.free_size = REALSIZE_TBLOCK - SIZE_HBLOCK_HCHUNK;
 	else
 		header_block.free_size = REALSIZE_SBLOCK - SIZE_HBLOCK_HCHUNK;
@@ -40,14 +40,13 @@ void				creat_headers(void *start_block, int type_block)
 void				*request_tiny_small_block(int type_block)
 {
 	void			*new_block;
-	t_block			header_block;
-	size_t			size_block;;
+	size_t			size_block;
 
 
 	if (type_block == TINY_BLOCK)
-		size_request = REALSIZE_TBLOCK;
+		size_block = REALSIZE_TBLOCK;
 	else
-		size_request = REALSIZE_SBLOCK;
+		size_block = REALSIZE_SBLOCK;
 	if ((new_block = mmap(NULL, size_block, PROT_WRITE | PROT_READ, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0)) == MAP_FAILED)
 	{
 		ft_putstr("ERROR FUNCITON MMAP\n");
