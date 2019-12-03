@@ -6,15 +6,13 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 18:03:12 by jraymond          #+#    #+#             */
-/*   Updated: 2019/12/02 19:41:21 by jraymond         ###   ########.fr       */
+/*   Updated: 2019/12/03 18:05:56 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/mman.h>
 #include "malloc.h"
-#include "libft.h"
-
-#include <stdio.h>
+#include "./libft/libft.h"
 
 void				creat_headers(void *start_block, int type_block)
 {

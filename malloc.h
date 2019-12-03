@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 14:07:30 by jraymond          #+#    #+#             */
-/*   Updated: 2019/12/02 19:28:16 by jraymond         ###   ########.fr       */
+/*   Updated: 2019/12/03 15:52:32 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,8 @@ void							*request_large_block(size_t size);
 void							*request_tiny_small_block(int type_block);
 void							*get_large_block(size_t size);
 void							*handle_tiny_small_block(size_t size);
+t_block							*ptr_is_large_block(void *ptr);
+t_chunk							*search_in_tiny_small_blocks(void *ptr);
+void							handle_defragmentation(t_chunk *chunk_free);
 
 #endif
