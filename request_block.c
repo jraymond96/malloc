@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 18:03:12 by jraymond          #+#    #+#             */
-/*   Updated: 2019/12/03 18:05:56 by jraymond         ###   ########.fr       */
+/*   Updated: 2019/12/04 14:15:48 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void				creat_headers(void *start_block, int type_block)
 	t_chunk			header_chunk;
 
 	if (type_block == TINY_BLOCK)
-		header_block.free_size = REALSIZE_TBLOCK - SIZE_HBLOCK_HCHUNK;
+		header_block.free_size = FIRSTSIZE_TBLOCK;
 	else
-		header_block.free_size = REALSIZE_SBLOCK - SIZE_HBLOCK_HCHUNK;
+		header_block.free_size = FIRSTSIZE_SBLOCK;
 	header_block.prev = NULL;
 	header_block.next = NULL;
 
@@ -59,12 +59,13 @@ void				*request_large_block(size_t size)
 {
 	t_block			header_block;
 	void			*new_block;
-	static size_t	total_size;
-	size_t			page_size;
+	size_t			total_size;
+	int				modulo;
 
-	page_size = (size_t)getpagesize();
-	if (!total_size)
-		total_size = (size + SIZEHEADERBLOCK) + (page_size - (((size + SIZEHEADERBLOCK) % page_size)));
+	if ((modulo = ((size + SIZEHEADERBLOCK) % PAGESIZE)))
+		total_size = (PAGESIZE + SIZEHEADERBLOCK) + (PAGESIZE - modulo);
+	else
+		total_size = size + SIZEHEADERBLOCK;
 	if ((new_block = mmap(NULL, total_size, PROT_WRITE | PROT_READ, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0)) == MAP_FAILED)
 	{
 		ft_putstr("ERROR FUNCITON MMAP\n");

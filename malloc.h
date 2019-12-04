@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 14:07:30 by jraymond          #+#    #+#             */
-/*   Updated: 2019/12/03 15:52:32 by jraymond         ###   ########.fr       */
+/*   Updated: 2019/12/04 15:00:12 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@
 
 # define REALSIZE_TBLOCK (SIZE_TBLOCK + (PAGESIZE - (SIZE_TBLOCK % PAGESIZE)))
 # define REALSIZE_SBLOCK (SIZE_SBLOCK + (PAGESIZE - (SIZE_SBLOCK % PAGESIZE)))
+
+# define FIRSTSIZE_TBLOCK REALSIZE_TBLOCK - SIZE_HBLOCK_HCHUNK
+# define FIRSTSIZE_SBLOCK REALSIZE_SBLOCK - SIZE_HBLOCK_HCHUNK
 
 /*
 **|-------------------------------------------------|
