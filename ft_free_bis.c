@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 14:45:08 by jraymond          #+#    #+#             */
-/*   Updated: 2020/01/27 13:02:31 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/01/27 17:40:01 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,19 @@ int			ptr_is_exist_chunk(void *ptr, t_block *block)
 
 void		handle_free_chunk(void *ptr, t_block *block)
 {
-	t_chunk	*cast_ptr;
+	t_chunk	*data_ptr;
 
-	cast_ptr = (t_chunk *)ptr;
+	data_ptr = (t_chunk *)((char *)ptr - SIZEHEADERCHUNK);
 	if (!ptr_is_exist_chunk(ptr, block))
 		return;
-	cast_ptr->free ^= FREE;
-	block->free_size += cast_ptr->size;
-	handle_defragmentation(cast_ptr, block);
+	show_alloc_mem();
+	ft_putstr("content free : ");
+	ft_putnbr(data_ptr->free);
+	ft_putchar('\n');
+	data_ptr->free |= FREE;
+	block->free_size += data_ptr->size;
+	show_alloc_mem();
+	handle_defragmentation(data_ptr, block);
 }
 
 t_block		*is_tiny_small_block(void *ptr, int type_block)

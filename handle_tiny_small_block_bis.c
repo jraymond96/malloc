@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 16:15:31 by jraymond          #+#    #+#             */
-/*   Updated: 2020/01/27 11:24:25 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/01/27 17:24:41 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void			init_newchunk_update_freechunk(t_chunk *new, int size, t_chunk *free_chun
 	new->free = 1;
 	new->prev = free_chunk;
 	new->next = free_chunk->next;
+	if (new->next)
+		((t_chunk *)new->next)->prev = new;
 
 	free_chunk->size = size;
 	free_chunk->free ^= FREE;

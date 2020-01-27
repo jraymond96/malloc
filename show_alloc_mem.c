@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 18:54:56 by jraymond          #+#    #+#             */
-/*   Updated: 2020/01/27 12:48:39 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/01/27 17:40:03 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ void	print_tiny_small_info(t_block *header_b)
 					ft_putstr("non\n");
 				else
 					ft_putstr("oui\n");
+				ft_putstr("free: [");
+				ft_putnbr(chunk->free);
+				ft_putstr("]\n");
 				chunk = chunk->next;
 		}
 	}
