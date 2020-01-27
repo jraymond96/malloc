@@ -33,3 +33,10 @@ Flags a utilise
 -Weverything (pour tout avoir)
 
 -Wpadded (if struct got padding for alignement)
+
+
+allocateur de pages suivant la size
+
+L algo qui cherche une place disponnible
+
+creation d un nouveau bloc si size restante - (size_mini_block + sizehchunk) > 0

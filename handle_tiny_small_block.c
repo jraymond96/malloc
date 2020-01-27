@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 09:47:28 by jraymond          #+#    #+#             */
-/*   Updated: 2019/12/04 15:00:16 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/01/23 19:35:46 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,10 @@ void			*add_new_chunk(t_chunk *chunk, int size)
 	new.next = chunk->next;
 	new.prev = chunk;
 
-//	ft_putstr("add 1\n");
-	addr_new = ((char *)chunk + (size + SIZEHEADERCHUNK));
+	addr_new = ((char *)chunk + size);
 	ft_memcpy(addr_new, &new, SIZEHEADERCHUNK);
-//	ft_putstr("add 2\n");
 	if (chunk->next)
 		((t_chunk *)chunk->next)->prev = addr_new;
-//	ft_putstr("add 3\n");
 	chunk->size = size;
 	chunk->next = addr_new;
 
@@ -95,28 +92,25 @@ void			*find_free_chunk(int type_block, size_t size)
 	t_chunk		*free_chunk;
 	int			cast_size;
 
+	ft_putstr("find_free_chunk 1\n")
 	cast_size = (int)size;
 	block_free_space = NULL;
+	ft_putstr("find_free_chunk 1\n")
 	while (1)
 	{
-//		ft_putstr("toto 1\n");
 		if (!(block_free_space = get_block_with_free_space(block_free_space, type_block, size)))
 			return (NULL);
 		chunk = (t_chunk *)((char *)block_free_space + SIZEHEADERBLOCK);
 		while (chunk)
 		{
-//			ft_putstr("TATA 1\n");
 			if ((chunk->free & FREE) && chunk->size >= cast_size)
 			{
-//				ft_putstr("TATA IF\n");
 				free_chunk = split_chunk(chunk, block_free_space, cast_size);
-//				ft_putstr("TATA IF\n");
 				return (((char *)free_chunk + SIZEHEADERCHUNK));
 			}
+			ft_putstr("find_free_chunk 1\n")
 			chunk = chunk->next;
-//			ft_putstr("TATA 2\n");
 		}
-//		ft_putstr("toto 2\n");
 	}
 }
 
@@ -124,6 +118,7 @@ void			*handle_tiny_small_block(size_t size)
 {
 	int			type_block;
 
+	ft_putstr("BLABLA\n");
 	type_block = (size <= TINY_BLOCK) ? TINY_BLOCK : SMALL_BLOCK;
 	if (!(g_start_header_block[type_block]))
 	{

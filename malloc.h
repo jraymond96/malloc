@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 14:07:30 by jraymond          #+#    #+#             */
-/*   Updated: 2019/12/04 15:00:12 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/01/27 10:55:56 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,13 @@ void							*request_tiny_small_block(int type_block);
 void							*get_large_block(size_t size);
 void							*handle_tiny_small_block(size_t size);
 t_block							*ptr_is_large_block(void *ptr);
-t_chunk							*search_in_tiny_small_blocks(void *ptr);
-void							handle_defragmentation(t_chunk *chunk_free);
+t_chunk							*search_in_tiny_small_blocks(t_block **block_content_chunk, void *ptr);
+//void							handle_defragmentation(t_chunk *chunk_free, t_block *block);
+
+void							show_alloc_mem();
+t_block							*is_large_block(void *ptr);
+t_block							*is_tiny_small_block(void *ptr, int type_block);
+int								ptr_is_exist_chunk(void *ptr, t_block *block);
+void							handle_defragmentation(t_chunk *ptr, t_block *block);
 
 #endif

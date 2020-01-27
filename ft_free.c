@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 17:20:47 by jraymond          #+#    #+#             */
-/*   Updated: 2019/12/04 15:00:14 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/01/14 18:01:33 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "malloc.h"
 #include "./libft/libft.h"
 
-void		handle_defragmentation(t_chunk *chunk_free)
+void		handle_defragmentation(t_chunk *chunk_free, t_block *block)
 {
 	int		new_size;
 	t_chunk	*chunk_h;
@@ -25,16 +25,19 @@ void		handle_defragmentation(t_chunk *chunk_free)
 			(chunk_h->next && (((t_chunk *)chunk_h->next)->free & FREE)))
 	{
 			new_size = (chunk_h->size + SIZEHEADERCHUNK) + (((t_chunk *)chunk_h->next)->size + SIZEHEADERCHUNK);
+			block->free_size += SIZEHEADERCHUNK * 2;
 			((t_chunk *)chunk_h->prev)->size += new_size;
 			((t_chunk *)chunk_h->prev)->next = chunk_h->next;
 	}
 	else if (chunk_h->prev && (((t_chunk *)chunk_h->prev)->free & FREE))
 	{
+		block->free_size += SIZEHEADERCHUNK;
 		((t_chunk *)chunk_h->prev)->size += chunk_h->size + SIZEHEADERCHUNK;
 		((t_chunk *)chunk_h->prev)->next = chunk_h->next;
 	}
 	else if (chunk_h->next && (((t_chunk *)chunk_h->next)->free & FREE))
 	{
+		block->free_size += SIZEHEADERCHUNK;
 		chunk_h->size += ((t_chunk *)chunk_h->next)->size + SIZEHEADERCHUNK;
 		chunk_h->next = ((t_chunk *)chunk_h->next)->next;
 	}
@@ -60,7 +63,6 @@ t_chunk		*if_ptr_exist(t_block *block, void *ptr)
 		if ((chunk + 1) == ptr)
 		{
 			ft_putstr("ptr_exist IF\n");
-			block->free_size += chunk->size;
 			return (chunk);
 		}
 		ft_putstr("ptr_exist AFTER\n");
@@ -90,22 +92,20 @@ t_block		*get_block_content_address(void *ptr, int type_block)
 	return (NULL);
 }
 
-t_chunk		*search_in_tiny_small_blocks(void *ptr)
+t_chunk		*search_in_tiny_small_blocks(t_block **content_chunkfree, void *ptr)
 {
-	t_block	*block;
-
-	if ((block = get_block_content_address(ptr, TINY_BLOCK)))
+	if ((*content_chunkfree = get_block_content_address(ptr, TINY_BLOCK)))
 	{
 		ft_putstr("search if\n");
-		return (if_ptr_exist(block, ptr));
+		return (if_ptr_exist(*content_chunkfree, ptr));
 	}
 	else
 	{
 		ft_putstr("search else\n");
-		block = get_block_content_address(ptr, SMALL_BLOCK);
+		*content_chunkfree = get_block_content_address(ptr, SMALL_BLOCK);
 		ft_putstr("search else 1\n");
 	}
-	return (if_ptr_exist(block, ptr));
+	return (if_ptr_exist(*content_chunkfree, ptr));
 }
 
 t_block		*ptr_is_large_block(void *ptr)
@@ -132,8 +132,10 @@ void		free(void *ptr)
 {
 	t_chunk	*chunk_to_free;
 	t_block	*large_block;
+	t_block	*block_content_chunk;
 
 	ft_putstr("free\n");
+	block_content_chunk = NULL;
 	if (! ptr)
 	{
 		ft_putstr("free ret\n");
@@ -152,12 +154,13 @@ void		free(void *ptr)
 	}
 	else
 	{
-		if ((chunk_to_free = search_in_tiny_small_blocks(ptr)))
+		if ((chunk_to_free = search_in_tiny_small_blocks(&block_content_chunk, ptr)))
 		{
 			ft_putstr("free_tiny_small exist\n");
+			block_content_chunk->free_size += chunk_to_free->size;
 			chunk_to_free->free |= FREE;
 			ft_putstr("free_tiny_small exist 1\n");
-			handle_defragmentation(chunk_to_free);
+			handle_defragmentation(chunk_to_free, block_content_chunk);
 			ft_putstr("free_tiny_small exist 2\n");
 		}
 	}

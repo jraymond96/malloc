@@ -6,7 +6,7 @@
 #    By: jraymond <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/19 15:26:12 by jraymond          #+#    #+#              #
-#    Updated: 2019/12/03 19:13:47 by jraymond         ###   ########.fr        #
+#    Updated: 2020/01/23 17:41:16 by jraymond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,10 +24,11 @@ SRCS = ft_malloc.c \
        show_alloc_mem.c \
 	   last_elem.c \
 	   handle_large_block.c \
-	   handle_tiny_small_block.c \
-	   ft_free.c \
-	   ft_realloc.c \
+	   handle_tiny_small_block_bis.c \
+	   ft_free_bis.c \
+	   ft_realloc_bis.c \
 	   request_block.c \
+	   handle_defragmentation.c \
 
 OBJS = $(SRCS:.c=.o)
 
