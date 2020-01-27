@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 16:22:54 by jraymond          #+#    #+#             */
-/*   Updated: 2020/01/27 17:05:21 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/01/27 18:58:12 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void		next_or_prev_free(t_chunk *ptr, t_chunk *prev, t_chunk *next)
 	{
 		ptr->size += next->size + SIZEHEADERCHUNK;
 		ptr->next = next->next;
-		((t_chunk *)next->next)->prev = ptr;
+		if (next->next)
+			((t_chunk *)next->next)->prev = ptr;
 	}
 }
 
@@ -38,7 +39,6 @@ void		handle_defragmentation(t_chunk *ptr, t_block *block)
 	next = ((t_chunk *)ptr)->next;
 	if ((prev && prev->free & FREE) && (next && next->free & FREE))
 	{
-		ft_putstr("DEFRAGMENTATION IF\n");
 		prev->size += (ptr->size + next->size) + (SIZEHEADERCHUNK * 2);
 		prev->next = next->next;
 		if (next->next)
@@ -47,7 +47,6 @@ void		handle_defragmentation(t_chunk *ptr, t_block *block)
 	}
 	else if ((prev && prev->free & FREE) || (next && next->free & FREE))
 	{
-		ft_putstr("DEFRAGMENTATION ELSE IF\n");
 		next_or_prev_free(ptr, prev, next);
 		block->free_size += SIZEHEADERCHUNK;
 	}

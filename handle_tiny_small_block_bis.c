@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 16:15:31 by jraymond          #+#    #+#             */
-/*   Updated: 2020/01/27 17:24:41 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/01/27 18:50:36 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void			init_newchunk_update_freechunk(t_chunk *new, int size, t_chunk *free_chun
 	new->prev = free_chunk;
 	new->next = free_chunk->next;
 	if (new->next)
-		((t_chunk *)new->next)->prev = new;
+		((t_chunk *)new->next)->prev = (void *)((char *)free_chunk + (SIZEHEADERCHUNK + size));
 
 	free_chunk->size = size;
 	free_chunk->free ^= FREE;
@@ -102,8 +102,6 @@ t_chunk			*get_chunk(int type_block, int size)
 			new_addr = (void *)((char *)free_chunk + SIZEHEADERCHUNK + size);
 			ft_memcpy(new_addr, &new_chunk, SIZEHEADERCHUNK);
 //			ft_putstr("TOTO 6\n");
-			if (free_chunk->next)
-				((t_chunk *)free_chunk->next)->prev = new_addr;
 		}
 //		ft_putstr("TOTO 7\n");
 		block_contains_freechunk->free_size -= free_chunk->size;

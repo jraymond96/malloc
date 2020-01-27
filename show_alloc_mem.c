@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 18:54:56 by jraymond          #+#    #+#             */
-/*   Updated: 2020/01/27 17:40:03 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/01/27 19:19:34 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	print_tiny_small_info(t_block *header_b)
 		{
 /*			if (!(chunk->free & FREE))
 			{*/
-				end_malloc = (void *)((char *)chunk + (chunk->size + SIZEHEADERCHUNK));
+				ft_putstr("BLABLABLA\n");
+//				end_malloc = (void *)((char *)chunk + (chunk->size + SIZEHEADERCHUNK));
 //				printf("%p - %p : %d octects\n", (void *)((char *)chunk + SIZEHEADERCHUNK), end_malloc, chunk->size);
 				ft_putstr("addr_chunk: ");
 				ft_decimal_to_hexa(chunk);
@@ -72,10 +73,10 @@ void	print_large_info()
 
 void	show_alloc_mem()
 {
-	ft_putstr("TINY :\n");
+	ft_putstr("---------------TINY :\n");
 	print_tiny_small_info(g_start_header_block[TINY_BLOCK]);
-	ft_putstr("SMALL :\n");
+	ft_putstr("---------------SMALL :\n");
 	print_tiny_small_info(g_start_header_block[SMALL_BLOCK]);
-//	ft_putstr("LARGE :\n");
-//	print_large_info();
+	ft_putstr("---------------LARGE :\n");
+	print_large_info();
 }

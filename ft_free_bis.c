@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 14:45:08 by jraymond          #+#    #+#             */
-/*   Updated: 2020/01/27 17:40:01 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/01/27 19:19:32 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void		munmap_block(int type_block, t_block *block)
 		biggest_chunk_size = FIRSTSIZE_SBLOCK;
 		size_munmap = REALSIZE_SBLOCK;
 	}
-	if (((t_chunk *)(block + 1))->size == biggest_chunk_size)
+	if (((t_chunk *)((char *)block + SIZEHEADERBLOCK))->size == biggest_chunk_size)
 	{
 		if (block->prev)
 			((t_block *)block->prev)->next = block->next;

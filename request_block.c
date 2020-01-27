@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 18:03:12 by jraymond          #+#    #+#             */
-/*   Updated: 2020/01/10 21:11:34 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/01/27 18:22:52 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void				creat_headers(void *start_block, int type_block)
 	header_block.next = NULL;
 
 	header_chunk.size = header_block.free_size;
-	header_chunk.free |= FREE;
+	header_chunk.free = 1;
 	header_chunk.prev = NULL;
 	header_chunk.next = NULL;
 
