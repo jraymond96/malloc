@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 14:45:08 by jraymond          #+#    #+#             */
-/*   Updated: 2020/01/27 19:19:32 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/01/30 21:57:36 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ int			ptr_is_exist_chunk(void *ptr, t_block *block)
 	chunk = (t_chunk *)((char *)block + SIZEHEADERBLOCK);
 	while (chunk)
 	{
-		ft_putstr("addr_chunk\n");
-		ft_decimal_to_hexa(chunk + 1);
-		ft_putchar('\n');
+//		ft_putstr("addr_chunk\n");
+//		ft_decimal_to_hexa(chunk + 1);
+//		ft_putchar('\n');
 		if ((chunk + 1) == ptr)
 		{
 			ft_putstr("OUUUI OUI\n");
@@ -57,13 +57,13 @@ void		handle_free_chunk(void *ptr, t_block *block)
 	data_ptr = (t_chunk *)((char *)ptr - SIZEHEADERCHUNK);
 	if (!ptr_is_exist_chunk(ptr, block))
 		return;
-	show_alloc_mem();
+//	show_alloc_mem();
 	ft_putstr("content free : ");
 	ft_putnbr(data_ptr->free);
 	ft_putchar('\n');
 	data_ptr->free |= FREE;
 	block->free_size += data_ptr->size;
-	show_alloc_mem();
+//	show_alloc_mem();
 	handle_defragmentation(data_ptr, block);
 }
 
@@ -123,9 +123,10 @@ void		free(void *ptr)
 	t_block	*large_block;
 	int		type_block;
 
+//	show_alloc_mem();
 	if (!ptr)
 	{
-		ft_putstr("END FREE\n");
+		ft_putstr("END FREE 1\n");
 		return;
 	}
 	if ((large_block = is_large_block(ptr)))
@@ -139,9 +140,15 @@ void		free(void *ptr)
 	else
 	{
 		if ((block_content_chunk = is_tiny_small_block(ptr, TINY_BLOCK)))
+		{
+			ft_putstr("TINY_BLOCK\n");
 			type_block = TINY_BLOCK;
+		}
 		else if ((block_content_chunk = is_tiny_small_block(ptr, SMALL_BLOCK)))
+		{
+			ft_putstr("SMALL_BLOCK\n");
 			type_block = SMALL_BLOCK;
+		}
 		else
 		{
 			ft_putstr("END FREE no exist ptr\n");
@@ -150,5 +157,6 @@ void		free(void *ptr)
 		handle_free_chunk(ptr, block_content_chunk);
 		munmap_block(type_block, block_content_chunk);
 	}
-	ft_putstr("END FREE\n");
+//	show_alloc_mem();
+	ft_putstr("END FREE 2\n");
 }

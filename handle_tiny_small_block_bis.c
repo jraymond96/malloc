@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 16:15:31 by jraymond          #+#    #+#             */
-/*   Updated: 2020/01/27 18:50:36 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/01/30 21:17:16 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void			init_newchunk_update_freechunk(t_chunk *new, int size, t_chunk *free_chun
 	new->prev = free_chunk;
 	new->next = free_chunk->next;
 	if (new->next)
-		((t_chunk *)new->next)->prev = (void *)((char *)free_chunk + (SIZEHEADERCHUNK + size));
+		((t_chunk *)new->next)->prev = (void *)((char *)free_chunk + SIZEHEADERCHUNK + size);
 
 	free_chunk->size = size;
 	free_chunk->free ^= FREE;
@@ -55,11 +55,11 @@ t_chunk			*find_free_chunk(int type_block, int size, t_block **block_with_freech
 	{
 		if (block->free_size > size && (chunk = browse_chunk(block, size)))
 		{
-			ft_putendl("----- FREE CHUNK -----");
-			ft_putnbr(chunk->size);
-			ft_putchar('\n');
-			ft_putnbr(chunk->free);
-			ft_putendl("\n----- FREE CHUNK END -----");
+//			ft_putendl("----- FREE CHUNK -----");
+//			ft_putnbr(chunk->size);
+//			ft_putchar('\n');
+//			ft_putnbr(chunk->free);
+//			ft_putendl("\n----- FREE CHUNK END -----");
 			*block_with_freechunk = block;
 			return (chunk);
 		}
@@ -67,6 +67,7 @@ t_chunk			*find_free_chunk(int type_block, int size, t_block **block_with_freech
 			last_block = block;
 		block = block->next;
 	}
+//	ft_putstr("OULALA\n");
 	new_block = request_tiny_small_block(type_block);
 	*block_with_freechunk = new_block;
 	last_block->next = new_block;
@@ -86,23 +87,26 @@ t_chunk			*get_chunk(int type_block, int size)
 //	ft_putstr("TOTO 2\n");
 	if (free_chunk->size == size)
 	{
-		ft_putstr("TOTO if\n");
+//		ft_putstr("TOTO if\n");
 		block_contains_freechunk->free_size -= free_chunk->size;
 		return (free_chunk + 1);
 	}
 	else
 	{
 
-		ft_putstr("TOTO 3\n");
+//		ft_putstr("TOTO 3\n");
 		if (free_chunk->size >= size + SIZEHEADERCHUNK + ((type_block == 0) ? SMALLEST_T : SMALLEST_S))
 		{
-			ft_putstr("TOTO 4\n");
+//			ft_putstr("TOTO 4\n");
 			init_newchunk_update_freechunk(&new_chunk, size, free_chunk);
 //			ft_putstr("TOTO 5\n");
 			new_addr = (void *)((char *)free_chunk + SIZEHEADERCHUNK + size);
 			ft_memcpy(new_addr, &new_chunk, SIZEHEADERCHUNK);
+			block_contains_freechunk->free_size -= SIZEHEADERCHUNK;
 //			ft_putstr("TOTO 6\n");
 		}
+		else
+			free_chunk->free ^= FREE;
 //		ft_putstr("TOTO 7\n");
 		block_contains_freechunk->free_size -= free_chunk->size;
 	}
@@ -117,6 +121,10 @@ void			*handle_tiny_small_block(size_t size)
 	void		*free_chunk;
 
 	cast_size = (int)size;
+	ft_putstr("\n\n");
+	ft_putnbr(size);
+	ft_putendl(" size malloc");
+
 	type_block = (size <= TINY) ? TINY_BLOCK : SMALL_BLOCK;
 	show_alloc_mem();
 	if (!(g_start_header_block[type_block]))
