@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 18:03:12 by jraymond          #+#    #+#             */
-/*   Updated: 2020/01/30 20:50:20 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/02/05 21:18:49 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void				*request_large_block(size_t size)
 	int				modulo;
 
 	if ((modulo = ((size + SIZEHEADERBLOCK) % PAGESIZE)))
-		total_size = (PAGESIZE + SIZEHEADERBLOCK) + (PAGESIZE - modulo);
+		total_size = (size + SIZEHEADERBLOCK) + (PAGESIZE - modulo);
 	else
 		total_size = size + SIZEHEADERBLOCK;
 	if ((new_block = mmap(NULL, total_size, PROT_WRITE | PROT_READ, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0)) == MAP_FAILED)

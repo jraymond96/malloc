@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 14:36:18 by jraymond          #+#    #+#             */
-/*   Updated: 2020/02/05 19:05:04 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/02/05 21:10:38 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void		*handle_large_block(t_block	*block, size_t size)
 	prev = (t_block *)block->prev;
 	next = (t_block *)block->next;
 	if (size <= block->free_size)
-		return ((void *)block);
+		return ((void *)(block + 1));
 	else
 	{
 		if (prev)
@@ -72,6 +72,7 @@ void		*realloc(void *ptr, size_t size)
 	t_block	*block;
 	void	*res;
 
+//	show_alloc_mem();
 //	ft_putstr("START REALLOC: ");
 //	ft_decimal_to_hexa(ptr);
 //	ft_putchar('\n');
@@ -91,11 +92,11 @@ void		*realloc(void *ptr, size_t size)
 	if ((block = is_large_block(ptr)))
 	{
 		res = handle_large_block(block, size);
-//		ft_putstr("END REALLOC\n");
+//		show_alloc_mem();
+//		ft_putstr("END REALLOC 0\n");
 		return (res);
 	}
 	res = handle_tiny_small(ptr, size);
-//	ft_putstr("END REALLOC\n");
-//	show_alloc_mem();
+//	ft_putstr("END REALLOC 1\n");
 	return (res);
 }
