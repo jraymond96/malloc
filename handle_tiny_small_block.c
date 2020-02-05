@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 09:47:28 by jraymond          #+#    #+#             */
-/*   Updated: 2020/01/23 19:35:46 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/01/30 20:59:23 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,8 @@ void			*find_free_chunk(int type_block, size_t size)
 	t_chunk		*free_chunk;
 	int			cast_size;
 
-	ft_putstr("find_free_chunk 1\n")
 	cast_size = (int)size;
 	block_free_space = NULL;
-	ft_putstr("find_free_chunk 1\n")
 	while (1)
 	{
 		if (!(block_free_space = get_block_with_free_space(block_free_space, type_block, size)))
@@ -108,7 +106,6 @@ void			*find_free_chunk(int type_block, size_t size)
 				free_chunk = split_chunk(chunk, block_free_space, cast_size);
 				return (((char *)free_chunk + SIZEHEADERCHUNK));
 			}
-			ft_putstr("find_free_chunk 1\n")
 			chunk = chunk->next;
 		}
 	}
@@ -118,7 +115,7 @@ void			*handle_tiny_small_block(size_t size)
 {
 	int			type_block;
 
-	ft_putstr("BLABLA\n");
+//	ft_putstr("BLABLA\n");
 	type_block = (size <= TINY_BLOCK) ? TINY_BLOCK : SMALL_BLOCK;
 	if (!(g_start_header_block[type_block]))
 	{

@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 16:15:31 by jraymond          #+#    #+#             */
-/*   Updated: 2020/01/30 21:17:16 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/02/05 19:04:23 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ t_chunk			*get_chunk(int type_block, int size)
 	{
 //		ft_putstr("TOTO if\n");
 		block_contains_freechunk->free_size -= free_chunk->size;
+		free_chunk->free ^= FREE;
 		return (free_chunk + 1);
 	}
 	else
@@ -121,17 +122,17 @@ void			*handle_tiny_small_block(size_t size)
 	void		*free_chunk;
 
 	cast_size = (int)size;
-	ft_putstr("\n\n");
-	ft_putnbr(size);
-	ft_putendl(" size malloc");
+//	ft_putstr("\n\n");
+//	ft_putnbr(size);
+//	ft_putendl(" size malloc");
 
 	type_block = (size <= TINY) ? TINY_BLOCK : SMALL_BLOCK;
-	show_alloc_mem();
 	if (!(g_start_header_block[type_block]))
 	{
 		if (!(g_start_header_block[type_block] = request_tiny_small_block(type_block)))
 			return (NULL);
 	}
 
+//	show_alloc_mem();
 	return ((void *)get_chunk(type_block, size));
 }

@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 14:45:08 by jraymond          #+#    #+#             */
-/*   Updated: 2020/01/30 21:57:36 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/02/05 19:05:22 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,7 @@ int			ptr_is_exist_chunk(void *ptr, t_block *block)
 //		ft_decimal_to_hexa(chunk + 1);
 //		ft_putchar('\n');
 		if ((chunk + 1) == ptr)
-		{
-			ft_putstr("OUUUI OUI\n");
 			return (1);
-		}
 		chunk = chunk->next;
 	}
 
@@ -58,9 +55,9 @@ void		handle_free_chunk(void *ptr, t_block *block)
 	if (!ptr_is_exist_chunk(ptr, block))
 		return;
 //	show_alloc_mem();
-	ft_putstr("content free : ");
-	ft_putnbr(data_ptr->free);
-	ft_putchar('\n');
+//	ft_putstr("content free : ");
+//	ft_putnbr(data_ptr->free);
+//	ft_putchar('\n');
 	data_ptr->free |= FREE;
 	block->free_size += data_ptr->size;
 //	show_alloc_mem();
@@ -115,10 +112,10 @@ void		munmap_block(int type_block, t_block *block)
 
 void		free(void *ptr)
 {
-	ft_putstr("START FREE\n");
-	ft_putendl("addr_free_ptr");
-	ft_decimal_to_hexa(ptr);
-	ft_putchar('\n');
+//	ft_putstr("START FREE\n");
+//	ft_putendl("addr_free_ptr");
+//	ft_decimal_to_hexa(ptr);
+//	ft_putchar('\n');
 	t_block	*block_content_chunk;
 	t_block	*large_block;
 	int		type_block;
@@ -126,13 +123,15 @@ void		free(void *ptr)
 //	show_alloc_mem();
 	if (!ptr)
 	{
-		ft_putstr("END FREE 1\n");
+//		ft_putstr("END FREE 1\n");
 		return;
 	}
 	if ((large_block = is_large_block(ptr)))
 	{
 		if (large_block->prev)
 			((t_block *)large_block->prev)->next = large_block->next;
+		else
+			g_start_header_block[LARGE_BLOCK] = large_block->next;
 		if (large_block->next)
 			((t_block *)large_block->next)->prev = large_block->prev;
 		munmap(large_block, (large_block->free_size + SIZEHEADERBLOCK));
@@ -141,22 +140,22 @@ void		free(void *ptr)
 	{
 		if ((block_content_chunk = is_tiny_small_block(ptr, TINY_BLOCK)))
 		{
-			ft_putstr("TINY_BLOCK\n");
+//			ft_putstr("TINY_BLOCK\n");
 			type_block = TINY_BLOCK;
 		}
 		else if ((block_content_chunk = is_tiny_small_block(ptr, SMALL_BLOCK)))
 		{
-			ft_putstr("SMALL_BLOCK\n");
+//			ft_putstr("SMALL_BLOCK\n");
 			type_block = SMALL_BLOCK;
 		}
 		else
 		{
-			ft_putstr("END FREE no exist ptr\n");
+//			ft_putstr("END FREE no exist ptr\n");
 			return;
 		}
 		handle_free_chunk(ptr, block_content_chunk);
 		munmap_block(type_block, block_content_chunk);
 	}
 //	show_alloc_mem();
-	ft_putstr("END FREE 2\n");
+//	ft_putstr("END FREE 2\n");
 }
