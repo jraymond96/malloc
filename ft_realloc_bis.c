@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 14:36:18 by jraymond          #+#    #+#             */
-/*   Updated: 2020/02/05 21:10:38 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/02/06 15:19:04 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "malloc.h"
 #include "./libft/libft.h"
 
-void		*handle_large_block(t_block	*block, size_t size)
+void		*handle_large_block(t_block *block, size_t size)
 {
 	t_block	*prev;
 	t_block	*next;
@@ -29,7 +29,7 @@ void		*handle_large_block(t_block	*block, size_t size)
 		if (prev)
 			prev->next = next;
 		else
-			g_start_header_block[LARGE_BLOCK] = next;
+			g_header_block[LARGE_BLOCK] = next;
 		if (next)
 			next->prev = prev;
 	}
@@ -46,7 +46,7 @@ void		*handle_tiny_small(void *ptr, size_t size)
 	void	*res;
 	t_chunk	*info_ptr;
 
-	if ((block = is_tiny_small_block(ptr, TINY_BLOCK)) || 
+	if ((block = is_tiny_small_block(ptr, TINY_BLOCK)) ||
 		((block = is_tiny_small_block(ptr, SMALL_BLOCK))))
 	{
 		if (ptr_is_exist_chunk(ptr, block))
@@ -72,31 +72,18 @@ void		*realloc(void *ptr, size_t size)
 	t_block	*block;
 	void	*res;
 
-//	show_alloc_mem();
-//	ft_putstr("START REALLOC: ");
-//	ft_decimal_to_hexa(ptr);
-//	ft_putchar('\n');
-//	ft_putnbr(size);
-//	ft_putchar('\n');
 	if (ptr && !size)
 	{
-//		ft_putstr("END REALLOC\n");
 		free(ptr);
 		return (NULL);
 	}
 	else if (!ptr)
-	{
-//		ft_putstr("END REALLOC !ptr\n");
 		return (malloc(size));
-	}
 	if ((block = is_large_block(ptr)))
 	{
 		res = handle_large_block(block, size);
-//		show_alloc_mem();
-//		ft_putstr("END REALLOC 0\n");
 		return (res);
 	}
 	res = handle_tiny_small(ptr, size);
-//	ft_putstr("END REALLOC 1\n");
 	return (res);
 }

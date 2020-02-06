@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 17:36:54 by jraymond          #+#    #+#             */
-/*   Updated: 2020/02/05 21:18:47 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/02/06 14:38:07 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,10 @@ void		*malloc(size_t size)
 {
 	void	*free_chunk;
 
-//	ft_putstr("MALLOC\n");
-//	ft_putnbr(size);
-//	ft_putendl(" size malloc");
 	free_chunk = NULL;
-//	if (g_start_header_block[TINY_BLOCK])
-//	{
-//		ft_decimal_to_hexa(g_start_header_block[TINY_BLOCK]);
-//		ft_putchar('\n');
-//	}
 	if (size > SMALL)
 		free_chunk = get_large_block(size);
 	else
 		free_chunk = handle_tiny_small_block(my_malloc_good_size(size));
-//	show_alloc_mem();
-//	ft_putendl("\nret_addrr_malloc");
-//	ft_decimal_to_hexa(free_chunk);
-//	ft_putchar('\n');
-//	ft_putstr("END MALLOC\n");
 	return (free_chunk);
 }

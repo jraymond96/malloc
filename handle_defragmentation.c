@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 16:22:54 by jraymond          #+#    #+#             */
-/*   Updated: 2020/01/30 20:46:19 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/02/06 14:41:12 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void		handle_defragmentation(t_chunk *ptr, t_block *block)
 	next = ((t_chunk *)ptr)->next;
 	if ((prev && prev->free & FREE) && (next && next->free & FREE))
 	{
-//		ft_putstr("\n***********DEFRAG 1 **********\n");
 		prev->size += (ptr->size + next->size) + (SIZEHEADERCHUNK * 2);
 		prev->next = next->next;
 		if (next->next)
@@ -48,7 +47,6 @@ void		handle_defragmentation(t_chunk *ptr, t_block *block)
 	}
 	else if ((prev && prev->free & FREE) || (next && next->free & FREE))
 	{
-//		ft_putstr("\n***********DEFRAG 2 **********\n");
 		next_or_prev_free(ptr, prev, next);
 		block->free_size += SIZEHEADERCHUNK;
 	}

@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 14:07:30 by jraymond          #+#    #+#             */
-/*   Updated: 2020/02/05 17:08:16 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/02/06 15:17:18 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ struct							s_header_block
 **|-------------------------------------------------|
 */
 
-t_block							*g_start_header_block[3];
+t_block							*g_header_block[3];
 
 /*
 **|-------------------------------------------------|
@@ -111,5 +111,8 @@ t_block							*is_large_block(void *ptr);
 t_block							*is_tiny_small_block(void *ptr, int type_block);
 int								ptr_is_exist_chunk(void *ptr, t_block *block);
 void							handle_defragmentation(t_chunk *ptr, t_block *block);
+void							munmap_block(int type_block, t_block *block);
+void							handle_free_chunk(void *ptr, t_block *block);
+t_chunk							*get_chunk(int type_block, int size);
 
 #endif

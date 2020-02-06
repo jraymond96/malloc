@@ -1,0 +1,42 @@
+header de block :	taille restant dans le block (size_t)
+					pointeur sur le next block (void *)
+
+
+
+header de chunk :	taille du chunk (int) / a passer negatif si free
+					pointeur sur prev chunk (void *)
+					pointeur sur next chunk (void *)
+
+defragmentation : au moment de free si le chunk de devant et celui de derriere sont dispo transforme en un gros chunk
+
+TINY = 992 (avec des chunks de la taille de multiple de 16)
+SMALL = 126976 (avec des chunks de multiple de 512)
+
+LARGE > SMALL (avec des chunks de mutiple de PAGESIZE)
+
+une size negative dans chunk represente un chunk libre
+
+A chaque malloc update header_block->size_free (header_block->size_free - size demande en parametre du malloc), pareil pour chaque free (header_block->size_free + size present dans le pointeur en parametre de free)
+
+!!! CALCULE POUR LA SIZE DEMANDE A MMAP POUR LE MOMENT ON FAIT 100 * (TINY + (SIZEOF(HEADER_BLOCK) + (100 * SIZEOF(HEADER_CHUNK)))) / LE TOUT ARRONDI AU MULTPILE SUPERIEUR DE GETPAGESIZE
+
+FUNCTION DE LA LIB UTULISE POUR LE MALLOC :
+
+FT_PUTSTR(); FT_MEMCPY(); FT_BZERO()
+
+
+
+
+
+Flags a utilise
+
+-Weverything (pour tout avoir)
+
+-Wpadded (if struct got padding for alignement)
+
+
+allocateur de pages suivant la size
+
+L algo qui cherche une place disponnible
+
+creation d un nouveau bloc si size restante - (size_mini_block + sizehchunk) > 0

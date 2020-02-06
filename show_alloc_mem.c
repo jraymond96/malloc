@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 18:54:56 by jraymond          #+#    #+#             */
-/*   Updated: 2020/02/05 20:39:50 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/02/06 19:07:30 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	print_large_info()
 	t_block			*block;
 	void			*end_malloc;
 
-	if (!(block = g_start_header_block[LARGE_BLOCK]))
+	if (!(block = g_header_block[LARGE_BLOCK]))
 		ft_putstr("Nothing\n");
 	else
 	{
@@ -76,9 +76,9 @@ void	print_large_info()
 void	show_alloc_mem()
 {
 	ft_putstr("---------------TINY :\n");
-	print_tiny_small_info(g_start_header_block[TINY_BLOCK]);
+	print_tiny_small_info(g_header_block[TINY_BLOCK]);
 	ft_putstr("---------------SMALL :\n");
-	print_tiny_small_info(g_start_header_block[SMALL_BLOCK]);
+	print_tiny_small_info(g_header_block[SMALL_BLOCK]);
 	ft_putstr("---------------LARGE :\n");
 	print_large_info();
 }

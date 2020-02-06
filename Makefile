@@ -6,7 +6,7 @@
 #    By: jraymond <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/19 15:26:12 by jraymond          #+#    #+#              #
-#    Updated: 2020/01/23 17:41:16 by jraymond         ###   ########.fr        #
+#    Updated: 2020/02/06 15:13:43 by jraymond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,8 @@ SRCS = ft_malloc.c \
 	   ft_realloc_bis.c \
 	   request_block.c \
 	   handle_defragmentation.c \
+	   handle_free_chunk.c \
+	   get_chunk.c \
 
 OBJS = $(SRCS:.c=.o)
 
