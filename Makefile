@@ -6,7 +6,7 @@
 #    By: jraymond <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/19 15:26:12 by jraymond          #+#    #+#              #
-#    Updated: 2020/02/06 15:13:43 by jraymond         ###   ########.fr        #
+#    Updated: 2020/02/07 19:11:28 by jraymond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRCS = ft_malloc.c \
 	   handle_defragmentation.c \
 	   handle_free_chunk.c \
 	   get_chunk.c \
+	   print_showalloc.c \
 
 OBJS = $(SRCS:.c=.o)
 
@@ -43,18 +44,20 @@ all : $(NAME)
 .PHONY : all fclean clean re
 
 $(NAME) : $(OBJS)
-		$(CC) -o $(NAME) -L./ft_printf -lftprintf -L./libft -lft $(FLAGS) $(OBJS)
+		@make -C libft
+		$(CC) -o $(NAME) $(FLAGS) $(OBJS) libft/libft.a
 		ln -s $(NAME) libft_malloc.so
-
 
 %.o : %.c
 		@$(CC) -fPIC -c $^
 
 clean :
+		@make clean -C libft
 		@rm -rf $(OBJS)
 		@echo "$(_RED)clean : $(_GREEN)Done$(_END)"
 
 fclean : clean
+		@make fclean -C libft
 		@rm -rf $(NAME)
 		@rm -rf libft_malloc.so
 		@echo "$(_RED)fclean : $(_GREEN)Done$(_END)"

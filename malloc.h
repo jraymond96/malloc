@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 14:07:30 by jraymond          #+#    #+#             */
-/*   Updated: 2020/02/06 15:17:18 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/02/07 18:56:04 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ void							*get_large_block(size_t size);
 void							*handle_tiny_small_block(size_t size);
 t_block							*ptr_is_large_block(void *ptr);
 t_chunk							*search_in_tiny_small_blocks(t_block **block_content_chunk, void *ptr);
-//void							handle_defragmentation(t_chunk *chunk_free, t_block *block);
 
 void							show_alloc_mem();
 t_block							*is_large_block(void *ptr);
@@ -114,5 +113,6 @@ void							handle_defragmentation(t_chunk *ptr, t_block *block);
 void							munmap_block(int type_block, t_block *block);
 void							handle_free_chunk(void *ptr, t_block *block);
 t_chunk							*get_chunk(int type_block, int size);
+void							print_showalloc(void *start_addr, void *end_addr, long size);
 
 #endif
