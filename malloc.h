@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 14:07:30 by jraymond          #+#    #+#             */
-/*   Updated: 2020/02/07 18:56:04 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/02/08 15:41:58 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <string.h>
 
 # define PAGESIZE 4096
+# define FD 2
 
 # define TINY 992
 # define SMALL 126976

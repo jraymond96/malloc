@@ -6,12 +6,12 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 15:12:37 by jraymond          #+#    #+#             */
-/*   Updated: 2020/02/06 16:35:41 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/02/08 17:12:35 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "malloc.h"
-#include "libft/libft.h"
+#include "../malloc.h"
+#include "../libft/libft.h"
 
 void		init_and_update(t_chunk *new, int size, t_chunk *free_chunk)
 {
@@ -46,7 +46,7 @@ t_chunk		*browse_chunk(t_block *block, int size)
 	return (NULL);
 }
 
-t_chunk		*find_free_chunk(int type_block, int size, t_block **blockfreechunk)
+t_chunk		*find_free_chunk(int type_block, size_t size, t_block **blockfreechunk)
 {
 	t_chunk	*chunk;
 	t_block	*block;
@@ -97,7 +97,7 @@ t_chunk		*get_chunk(int type_block, int size)
 	t_block	*block_contains_freechunk;
 
 	block_contains_freechunk = NULL;
-	free_chunk = find_free_chunk(type_block, size, &block_contains_freechunk);
+	free_chunk = find_free_chunk(type_block, (size_t)size, &block_contains_freechunk);
 	if (free_chunk->size == size)
 	{
 		block_contains_freechunk->free_size -= free_chunk->size;

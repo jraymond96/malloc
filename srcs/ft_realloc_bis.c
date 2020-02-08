@@ -6,13 +6,13 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 14:36:18 by jraymond          #+#    #+#             */
-/*   Updated: 2020/02/06 15:19:04 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/02/08 15:52:29 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/mman.h>
-#include "malloc.h"
-#include "./libft/libft.h"
+#include "../malloc.h"
+#include "../libft/libft.h"
 
 void		*handle_large_block(t_block *block, size_t size)
 {

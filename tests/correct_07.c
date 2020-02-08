@@ -1,31 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   last_elem.c                                        :+:      :+:    :+:   */
+/*   correct_07.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/26 18:37:17 by jraymond          #+#    #+#             */
-/*   Updated: 2019/12/04 15:00:18 by jraymond         ###   ########.fr       */
+/*   Created: 2020/02/08 14:59:53 by jraymond          #+#    #+#             */
+/*   Updated: 2020/02/08 15:43:08 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "malloc.h"
+#include "../libft/libft.h"
 
-t_block	*last_header_block(t_block *begin)
+int		main()
 {
-	if (!begin)
-		return (NULL);
-	while (begin->next)
-		begin = begin->next;
-	return (begin);
-}
+	char	*addr;
 
-t_chunk	*last_header_chunk(t_chunk *begin)
-{
-	if (!begin)
-		return (NULL);
-	while (begin->next)
-		begin = begin->next;
-	return (begin);
+	if (!(addr = (char *)malloc(16)))
+		ft_putstr("it's okay.\n");
+	return (0);
 }

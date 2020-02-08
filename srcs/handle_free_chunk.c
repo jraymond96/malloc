@@ -6,11 +6,11 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 14:56:21 by jraymond          #+#    #+#             */
-/*   Updated: 2020/02/06 15:02:06 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/02/08 15:53:14 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "malloc.h"
+#include "../malloc.h"
 
 int			ptr_is_exist_chunk(void *ptr, t_block *block)
 {

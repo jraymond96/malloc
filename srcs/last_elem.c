@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_large_chunk.c                               :+:      :+:    :+:   */
+/*   last_elem.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/27 17:56:25 by jraymond          #+#    #+#             */
-/*   Updated: 2020/02/06 15:19:40 by jraymond         ###   ########.fr       */
+/*   Created: 2019/11/26 18:37:17 by jraymond          #+#    #+#             */
+/*   Updated: 2020/02/08 15:54:13 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "malloc.h"
+#include "../malloc.h"
 
-void	*get_large_block(size_t size)
+t_block	*last_header_block(t_block *begin)
 {
-	t_block			*last;
-	void			*new;
+	if (!begin)
+		return (NULL);
+	while (begin->next)
+		begin = begin->next;
+	return (begin);
+}
 
-	new = request_large_block(size);
-	if (!(last = last_header_block(g_header_block[LARGE_BLOCK])))
-		g_header_block[LARGE_BLOCK] = (t_block *)new;
-	else
-		last->next = (t_block *)new;
-	return ((void *)((char *)new + SIZEHEADERBLOCK));
+t_chunk	*last_header_chunk(t_chunk *begin)
+{
+	if (!begin)
+		return (NULL);
+	while (begin->next)
+		begin = begin->next;
+	return (begin);
 }

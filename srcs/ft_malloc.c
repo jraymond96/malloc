@@ -6,12 +6,12 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 17:36:54 by jraymond          #+#    #+#             */
-/*   Updated: 2020/02/06 14:38:07 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/02/08 15:52:15 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "malloc.h"
-#include "./libft/libft.h"
+#include "../malloc.h"
+#include "../libft/libft.h"
 #include <unistd.h>
 
 size_t		my_malloc_good_size(size_t size)

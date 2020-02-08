@@ -6,21 +6,21 @@
 #    By: jraymond <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/19 15:26:12 by jraymond          #+#    #+#              #
-#    Updated: 2020/02/07 19:11:28 by jraymond         ###   ########.fr        #
+#    Updated: 2020/02/08 17:13:48 by jraymond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+CC				=	gcc
+CFLAGS			=	-Wall -Werror -Wextra
 
 ifeq ($(HOSTTYPE),)
 	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
 endif
 
-NAME = libft_malloc_$(HOSTTYPE).so
-
-CC = gcc
-
-FLAGS = -Wall -Wextra -Werror -shared
-
-SRCS = ft_malloc.c \
+TEST			=	a.out
+NAME			=	libft_malloc_$(HOSTTYPE).so
+LINK			=	libft_malloc.so
+_SRCS			=	ft_malloc.c \
        show_alloc_mem.c \
 	   last_elem.c \
 	   handle_large_block.c \
@@ -33,35 +33,48 @@ SRCS = ft_malloc.c \
 	   get_chunk.c \
 	   print_showalloc.c \
 
-OBJS = $(SRCS:.c=.o)
 
-_GREEN=\x1b[32m
-_RED=\x1b[31m
-_END=\x1b[0m
+SRCS_DIR		=	srcs
+SRCS			=	$(addprefix $(SRCS_DIR)/,$(_SRCS))
 
-all : $(NAME)
+OBJS_DIR		=	objs
+OBJS			=	$(addprefix $(OBJS_DIR)/,$(_SRCS:%.c=%.o))
 
-.PHONY : all fclean clean re
+INCS_DIR		=	.
+INCS			=	-I $(INCS_DIR) -I $(LIB_DIR)/includes
+HEADER			=	$(INCS_DIR)/malloc.h
 
-$(NAME) : $(OBJS)
-		@make -C libft
-		$(CC) -o $(NAME) $(FLAGS) $(OBJS) libft/libft.a
-		ln -s $(NAME) libft_malloc.so
+LIB_DIR			= libft
 
-%.o : %.c
-		@$(CC) -fPIC -c $^
+all: $(HEADER) $(NAME)
 
-clean :
-		@make clean -C libft
-		@rm -rf $(OBJS)
-		@echo "$(_RED)clean : $(_GREEN)Done$(_END)"
+$(NAME): lib $(OBJS_DIR) $(OBJS)
+		@$(CC) $(CFLAGS) $(INCS) -o $(NAME) -L$(LIB_DIR) -lft -shared $(OBJS)
+			ln -sf $(NAME) $(LINK)
+		@echo "$(NAME) : Done"
 
-fclean : clean
-		@make fclean -C libft
-		@rm -rf $(NAME)
-		@rm -rf libft_malloc.so
-		@echo "$(_RED)fclean : $(_GREEN)Done$(_END)"
+$(OBJS_DIR):
+		@mkdir -p $(OBJS_DIR)
 
-re :
-	@make fclean
-	@make
+$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c $(HEADER)
+		@$(CC) $(CFLAGS) -fPIC $(INCS) -c -o $@ $<
+
+lib:
+	@make -C $(LIB_DIR)
+
+
+
+clean:
+		@make fclean -C $(LIB_DIR)
+		@/bin/rm -rf $(OBJS_DIR)
+		@echo "$(NAME) clean : Done"
+
+fclean: clean
+		@/bin/rm -f $(NAME) $(LINK) a.out
+		@echo "$(NAME) fclean : Done"
+
+re:
+		@make fclean
+		@make
+
+.PHONY: all clean fclean re

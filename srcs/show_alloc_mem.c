@@ -6,14 +6,12 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 18:54:56 by jraymond          #+#    #+#             */
-/*   Updated: 2020/02/07 18:55:07 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/02/08 17:10:11 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "malloc.h"
-#include "./libft/libft.h"
-#include "./ft_printf/ft_printf.h"
-#include <stdio.h>
+#include "../malloc.h"
+#include "../libft/libft.h"
 
 void	print_tiny_small_info(t_block *header_b)
 {

@@ -6,13 +6,13 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 18:03:12 by jraymond          #+#    #+#             */
-/*   Updated: 2020/02/06 15:07:48 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/02/08 15:54:43 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/mman.h>
-#include "malloc.h"
-#include "./libft/libft.h"
+#include "../malloc.h"
+#include "../libft/libft.h"
 
 void				creat_headers(void *start_block, int type_block)
 {
@@ -46,7 +46,7 @@ void				*request_tiny_small_block(int type_block)
 	if ((new_block = mmap(NULL, size_block, PROT_WRITE |
 			PROT_READ, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0)) == MAP_FAILED)
 	{
-		ft_putstr("ERROR FUNCITON MMAP\n");
+		ft_putstr_fd("ERROR FUNCITON MMAP\n", FD);
 		return (NULL);
 	}
 	creat_headers(new_block, type_block);
@@ -67,7 +67,7 @@ void				*request_large_block(size_t size)
 	if ((new_block = mmap(NULL, total_size, PROT_WRITE |
 		PROT_READ, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0)) == MAP_FAILED)
 	{
-		ft_putstr("ERROR FUNCITON MMAP\n");
+		ft_putstr_fd("ERROR FUNCITON MMAP\n", FD);
 		return (NULL);
 	}
 	header_block.free_size = total_size - SIZEHEADERBLOCK;

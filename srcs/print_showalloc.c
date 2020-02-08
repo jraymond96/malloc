@@ -6,12 +6,12 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 16:59:02 by jraymond          #+#    #+#             */
-/*   Updated: 2020/02/07 18:55:04 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/02/08 15:54:27 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "malloc.h"
-#include "libft/libft.h"
+#include "../malloc.h"
+#include "../libft/libft.h"
 
 void		concat_addr_sizeoctets(char *size, char *result)
 {
