@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 15:12:37 by jraymond          #+#    #+#             */
-/*   Updated: 2020/02/08 17:12:35 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/02/09 15:15:45 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ t_chunk		*browse_chunk(t_block *block, int size)
 	return (NULL);
 }
 
-t_chunk		*find_free_chunk(int type_block, size_t size, t_block **blockfreechunk)
+t_chunk		*find_free_chunk(int tblock, size_t size, t_block **blockfreechunk)
 {
 	t_chunk	*chunk;
 	t_block	*block;
 	t_block	*last_block;
 	t_block	*new_block;
 
-	block = g_header_block[type_block];
+	block = g_header_block[tblock];
 	new_block = NULL;
 	while (block)
 	{
@@ -66,9 +66,10 @@ t_chunk		*find_free_chunk(int type_block, size_t size, t_block **blockfreechunk)
 			last_block = block;
 		block = block->next;
 	}
-	new_block = request_tiny_small_block(type_block);
+	new_block = request_tiny_small_block(tblock);
 	*blockfreechunk = new_block;
 	last_block->next = new_block;
+	new_block->prev = last_block;
 	return ((t_chunk *)((char *)new_block + SIZEHEADERBLOCK));
 }
 
@@ -94,17 +95,17 @@ void		split_chunk(int t, t_chunk *free_chunk, t_block *block, int size)
 t_chunk		*get_chunk(int type_block, int size)
 {
 	t_chunk	*free_chunk;
-	t_block	*block_contains_freechunk;
+	t_block	*blockfreechunk;
 
-	block_contains_freechunk = NULL;
-	free_chunk = find_free_chunk(type_block, (size_t)size, &block_contains_freechunk);
+	blockfreechunk = NULL;
+	free_chunk = find_free_chunk(type_block, (size_t)size, &blockfreechunk);
 	if (free_chunk->size == size)
 	{
-		block_contains_freechunk->free_size -= free_chunk->size;
+		blockfreechunk->free_size -= free_chunk->size;
 		free_chunk->free ^= FREE;
 		return (free_chunk + 1);
 	}
 	else
-		split_chunk(type_block, free_chunk, block_contains_freechunk, size);
+		split_chunk(type_block, free_chunk, blockfreechunk, size);
 	return (free_chunk + 1);
 }

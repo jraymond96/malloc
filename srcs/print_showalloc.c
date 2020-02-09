@@ -6,7 +6,7 @@
 /*   By: jraymond <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 16:59:02 by jraymond          #+#    #+#             */
-/*   Updated: 2020/02/08 15:54:27 by jraymond         ###   ########.fr       */
+/*   Updated: 2020/02/09 16:53:16 by jraymond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,13 @@ void		concat_addresses(char *start, char *end, char *result)
 
 	len_start = ft_strlen(start);
 	len_end = ft_strlen(end);
-	ft_memcpy(result, start, len_start);
+	ft_memcpy(result, "0x", 2);
+	ft_memcpy(&result[2], start, len_start);
+	len_start += 2;
 	ft_memcpy(&result[len_start], " - ", 3);
 	len_start += 3;
+	ft_memcpy(&result[len_start], "0x", 2);
+	len_start += 2;
 	ft_memcpy(&result[len_start], end, len_end);
 	len_start += len_end;
 	result[len_start] = '\0';
